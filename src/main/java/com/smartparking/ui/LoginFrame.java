@@ -17,7 +17,7 @@ public final class LoginFrame extends JFrame {
         JPanel form=new JPanel(new GridLayout(0,1,0,10));form.setOpaque(false); form.setBorder(new EmptyBorder(35,0,0,0));
         JLabel welcome=new JLabel("Welcome back");welcome.setFont(UiStyle.TITLE); JLabel hint=new JLabel("Sign in to manage today's parking.");hint.setForeground(UiStyle.MUTED);
         JTextField user=new JTextField(); JPasswordField pass=new JPasswordField(); styleField(user);styleField(pass);
-        JButton login=new JButton("Sign in"); login.setBackground(UiStyle.BLUE);login.setForeground(Color.WHITE);login.setFont(UiStyle.BOLD);login.setFocusPainted(false);
+        JButton login=UiStyle.primaryButton("Sign in");
         form.add(welcome);form.add(hint);form.add(new JLabel("Username"));form.add(user);form.add(new JLabel("Password"));form.add(pass);form.add(login);
         JLabel note=new JLabel("Educational demo • not production authentication",SwingConstants.CENTER);note.setForeground(UiStyle.MUTED);note.setFont(new Font("Segoe UI",Font.PLAIN,11));root.add(brand,BorderLayout.NORTH);root.add(form,BorderLayout.CENTER);root.add(note,BorderLayout.SOUTH);setContentPane(root);
         login.addActionListener(e->{if(AppConfig.DEMO_USERNAME.equals(user.getText().trim())&&AppConfig.DEMO_PASSWORD.equals(new String(pass.getPassword()))){ParkingAttendant attendant=new ParkingAttendant(user.getText().trim());ParkingManager manager=new ParkingManager(store);new DashboardFrame(manager,attendant).setVisible(true);dispose();}else JOptionPane.showMessageDialog(this,"Username or password is incorrect.","Sign in failed",JOptionPane.ERROR_MESSAGE);});

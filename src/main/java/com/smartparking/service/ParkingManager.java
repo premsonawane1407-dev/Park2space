@@ -51,7 +51,16 @@ public final class ParkingManager implements Parkable {
     /** Iterator makes history search explicit and safe while building a filtered result. */
     public synchronized List<ParkingRecord> searchHistory(String registration,VehicleType type){
         List<ParkingRecord> result=new ArrayList<>(); String q=registration==null?"":registration.trim().toUpperCase(Locale.ROOT);
-        Iterator<ParkingRecord> iterator=history.iterator(); while(iterator.hasNext()){ParkingRecord r=iterator.next(); if(r.getRegistrationNumber().contains(q)&&(type==null||r.getVehicleType()==type))result.add(r);} return result;
+        Iterator<ParkingRecord> activeIterator=activeByVehicle.values().iterator();
+        while(activeIterator.hasNext()){ParkingRecord r=activeIterator.next(); if(matchesHistoryFilter(r,q,type))result.add(r);}
+        Iterator<ParkingRecord> completedIterator=history.iterator();
+        while(completedIterator.hasNext()){ParkingRecord r=completedIterator.next(); if(matchesHistoryFilter(r,q,type))result.add(r);}
+        result.sort(Comparator.comparing(ParkingRecord::getEntryTime).reversed());
+        return result;
+    }
+    private boolean matchesHistoryFilter(ParkingRecord r,String query,VehicleType type){
+        boolean matches=query.isEmpty()||r.getRegistrationNumber().contains(query)||r.getTicketId().toUpperCase(Locale.ROOT).contains(query);
+        return matches&&(type==null||r.getVehicleType()==type);
     }
     public synchronized void save() throws IOException {store.save(getActiveRecords(),history);}
 }

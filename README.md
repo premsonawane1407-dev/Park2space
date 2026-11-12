@@ -12,7 +12,7 @@ Manual parking operations make it difficult to track available spaces, avoid dup
 - Fixed capacity of 20 spaces: 10 car spaces (C01–C10) and 10 bike spaces (B01–B10).
 - Automatic first available slot allocation, duplicate active vehicle prevention, ticket IDs, and slot detail popups.
 - Hourly billing rounded up for every started hour, with a one hour minimum.
-- Searchable transaction history and vehicle type filter.
+- Live parking history that shows active vehicles on entry and completed transactions on exit; searchable by registration or ticket ID with a vehicle type filter.
 - Active vehicles and completed history saved to `data/active_vehicles.csv` and `data/parking_records.csv`.
 - Background startup loading and sequential background saves keep file work off the Swing event thread.
 
