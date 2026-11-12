@@ -1,0 +1,14 @@
+*.class
+target/
+out/
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+.DS_Store
+Thumbs.db
+data/*.csv
+build/
+nbproject/private/
